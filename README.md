@@ -15,6 +15,10 @@ A simple chat interface component, built with [Vaadin](https://vaadin.com/), whe
 ### Real-time data management
 Users can view and edit customer entities in real-time through the chat interface. This view shows a live view of the customer database next to the AI chat component which can be used to query and update customer data. This allows users to modify real entities via chats such as `Update customer John Doe's email to 'new.john.doe@email.com'`.
 
+### Spring AI features used
+ - Chat history management: The application uses Spring AI's chat history management to keep track of the conversation context.
+ - Integration with OpenAI: The application integrates with OpenAI's API to send and receive messages, allowing users to interact with the AI model.
+ - Spring AI 'Tools': The application uses Spring AI's tools to enable the AI to interact with the application services (such as CustomerService.java). This includes querying and updating customer information based on user requests.
 
 ## Prerequisites
 Before running the application, you need to set your Open AI API key in the `application.properties` file:

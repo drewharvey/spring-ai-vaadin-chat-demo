@@ -1,5 +1,8 @@
 # Vaadin + Spring AI Chat Demo
-Simple Vaadin + Spring Boot application that demonstrates leveraging Spring AI for viewing, editing and managing data, in real-time, via a chat window. This demo uses the Open AI API to interact with Chat GPT.
+Simple application that demonstrates leveraging Spring AI for viewing, editing, and managing data, in real-time, via a chat window. This demo uses the following:
+ - [Vaadin](https://vaadin.com/) for the UI framework + components
+ - [Spring AI](https://spring.io/projects/spring-ai) for interacting with AI models
+ - [OpenAI](https://openai.com/) for the AI model
 
 ![Customer view screenshot](customer-chat-screenshot.jpg)
 
@@ -7,7 +10,7 @@ Simple Vaadin + Spring Boot application that demonstrates leveraging Spring AI f
 Below are a few details of what this application demonstrates:
 
 ### AI chat interface
-A simple chat interface component where users can interact with the AI. This is a generic chat interface which can be connected to your application services.  This interface also allows users to toggle on/off chat history, undo actions, and view a full history of previous messages.
+A simple chat interface component, built with [Vaadin](https://vaadin.com/), where users can interact with the AI. This is a generic chat interface which can be connected to your application services.  This interface also allows users to toggle on/off chat history, undo actions, and view a full history of previous messages.
 
 ### Real-time data management
 Users can view and edit customer entities in real-time through the chat interface. This view shows a live view of the customer database next to the AI chat component which can be used to query and update customer data. This allows users to modify real entities via chats such as `Update customer John Doe's email to 'new.john.doe@email.com'`.
@@ -37,5 +40,3 @@ To build the application in production mode, run:
 ./mvnw -Pproduction package
 ```
 
-## What is in the demo
-This project demonstrates basic use of Spring AI with Vaadin. 

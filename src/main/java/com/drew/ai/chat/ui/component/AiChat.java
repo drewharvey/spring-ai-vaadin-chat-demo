@@ -1,9 +1,6 @@
 package com.drew.ai.chat.ui.component;
 
-import com.drew.ai.chat.entity.CustomerEntity;
-import com.drew.ai.chat.service.CustomerService;
 import com.drew.ai.chat.service.OpenAiService;
-import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.checkbox.Checkbox;
@@ -24,16 +21,15 @@ import reactor.core.publisher.Flux;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
- * A chat component that allows users to interact with the Open AI service.
+ * A chat component that allows users to interact with the Open AI service. It displays an input field,
+ * a list of messages, and a few additional features such as an "Undo" button.
  */
 @SpringComponent
 @UIScope
 public class AiChat extends VerticalLayout {
 
-    private final CustomerService customerService;
     private final OpenAiService openAiService;
 
     private final MessageList messageList;
@@ -42,8 +38,7 @@ public class AiChat extends VerticalLayout {
     private final List<ChatResponseListener> chatResponseListeners = new ArrayList<>();
 
 
-    public AiChat(CustomerService customerService, OpenAiService openAiService) {
-        this.customerService = customerService;
+    public AiChat(OpenAiService openAiService) {
         this.openAiService = openAiService;
 
         var rememberHistory = new Checkbox("Remember History", true);
@@ -76,7 +71,6 @@ public class AiChat extends VerticalLayout {
         });
 
         // button to verify customers
-        var customerButton = new Button("Show Customers", e -> printCustomers());
         var undoButton = new Button("Undo", e -> requestUndo());
         var historyButton = new Button("Show History", e -> showHistory());
 
@@ -84,10 +78,17 @@ public class AiChat extends VerticalLayout {
         setSizeFull();
         addClassNames(LumoUtility.AlignItems.STRETCH);
 
-        add(scrollWrapper, messageInput, new HorizontalLayout(customerButton, undoButton, historyButton, rememberHistory));
+        var buttons = new HorizontalLayout(undoButton, historyButton, rememberHistory);
+        buttons.setAlignItems(Alignment.BASELINE);
+
+        add(scrollWrapper, messageInput, buttons);
         setFlexGrow(1, scrollWrapper);
     }
 
+    /**
+     * Handles the response from OpenAI by subscribing to the response flux and updating the UI each time
+     * a new chunk of content is received. This makes it async (non-blocking) but can be modified to be blocking if needed.
+     */
     private void handleResponse(UI ui, MessageListItem responseItem, Flux<String> responseFlux) {
         responseFlux.subscribe(content -> {
             ui.access(() -> {
@@ -105,13 +106,10 @@ public class AiChat extends VerticalLayout {
         });
     }
 
-    private void printCustomers() {
-        var response = customerService.findAll().stream().map(CustomerEntity::toString)
-                .collect(Collectors.joining("\n\n"));
-        messageList.addItem(new MessageListItem(response, Instant.now(), "System"));
-        scrollChat();
-    }
-
+    /**
+     * Requests an undo of the last request change by sending a preformatted message to OpenAI. This
+     * is just an experimental feature to demonstrate how you might handle undo functionality.
+     */
     private void requestUndo() {
         // add a system message
         messageList.addItem(new MessageListItem("Requesting undo", Instant.now(), "System"));
@@ -126,6 +124,9 @@ public class AiChat extends VerticalLayout {
         handleResponse(ui, responseItem, openAiService.undoLastRequestChange());
     }
 
+    /**
+     * Displays the chat history in a dialog.
+     */
     private void showHistory() {
         var history = openAiService.getChatHistory();
         var dialog = new Dialog("Chat history");

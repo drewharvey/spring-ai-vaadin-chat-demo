@@ -83,6 +83,11 @@ public class AiChat extends VerticalLayout {
 
         add(scrollWrapper, messageInput, buttons);
         setFlexGrow(1, scrollWrapper);
+
+        // add a system message to chat providing instructions
+        messageList.addItem(new MessageListItem("This chat allows you to interact with the application. You can ask the chat " +
+                "to query and update data. For example, if you wan to update all of the customer first names to 'John', " +
+                "you can tell chat: `update all customer first names to 'John'`.", Instant.now(), "System"));
     }
 
     /**

@@ -22,7 +22,7 @@ public class MainLayout extends AppLayout {
 
         var toggle = new DrawerToggle();
 
-        var title = new H1("MyApp");
+        var title = new H1("Vaadin + Spring AI Chat");
         title.getStyle().set("font-size", "var(--lumo-font-size-l)")
                 .set("margin", "0");
 

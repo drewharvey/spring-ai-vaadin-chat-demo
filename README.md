@@ -1,6 +1,8 @@
 # Vaadin + Spring AI Chat Demo
 Simple Vaadin + Spring Boot application that demonstrates leveraging Spring AI for viewing, editing and managing data, in real-time, via a chat window. This demo uses the Open AI API to interact with Chat GPT.
 
+![Customer view screenshot](customer-chat-screenshot.jpg)
+
 ## Features of demo
 Below are a few details of what this application demonstrates:
 
@@ -9,6 +11,7 @@ A simple chat interface component where users can interact with the AI. This is 
 
 ### Real-time data management
 Users can view and edit customer entities in real-time through the chat interface. This view shows a live view of the customer database next to the AI chat component which can be used to query and update customer data. This allows users to modify real entities via chats such as `Update customer John Doe's email to 'new.john.doe@email.com'`.
+
 
 ## Prerequisites
 Before running the application, you need to set your Open AI API key in the `application.properties` file:

@@ -71,7 +71,8 @@ public class AiChat extends VerticalLayout {
             scrollChat();
 
             // fetch a response from OpenAI, updating the response with each chunk of content
-            handleResponse(UI.getCurrent(), responseItem, openAiService.getResponse(rememberHistory.getValue(), e.getValue()));
+            var ui = UI.getCurrent();
+            handleResponse(ui, responseItem, openAiService.getResponse(rememberHistory.getValue(), e.getValue()));
         });
 
         // button to verify customers
@@ -121,7 +122,8 @@ public class AiChat extends VerticalLayout {
         messageList.addItem(responseItem);
         scrollChat();
 
-        handleResponse(UI.getCurrent(), responseItem, openAiService.undoLastRequestChange());
+        var ui = UI.getCurrent();
+        handleResponse(ui, responseItem, openAiService.undoLastRequestChange());
     }
 
     private void showHistory() {
